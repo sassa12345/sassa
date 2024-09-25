@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミライシード</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #fff;
+            --accent-color: #00ffe7;
+            --message-bg: #2c2c2c;
+        }
+
+        .light-theme {
+            --bg-color: #f0f0f0;
+            --container-bg: #ffffff;
+            --text-color: #000;
+            --accent-color: #007bff;
+            --message-bg: #eaeaea;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: var(--container-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 30px rgba(0, 255, 255, 0.5);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        input, button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #272727;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00d9b3;
+        }
+
+        #chat-box {
+            background-color: var(--message-bg);
+            padding: 10px;
+            border-radius: 5px;
+            height: 200px;
+            overflow-y: scroll;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            display: none;
+            z-index: 10;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .font-size-control {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="group-display" class="hidden">
+    <h2 id="current-group-name"></h2>
+</div>
+
+<div class="theme-toggle">
+    <button onclick="toggleTheme()">テーマ切り替え</button>
+</div>
+
+<!-- クイズ画面 -->
+<div class="container" id="quiz-container">
+    <h1>クイズに答えてください</h1>
+    <p>耳が遠い人の下の名前は？</p>
+    <input type="text" id="quiz-answer" placeholder="答えを入力してください">
+    <button onclick="checkAnswer()">答えを送信</button>
+    <p id="quiz-result" style="color: var(--text-color);"></p>
+</div>
+
+<!-- グループ作成とログイン -->
+<div class="container hidden" id="group-ui">
+    <h2>グループ作成</h2>
+    <input type="text" id="group-name" placeholder="グループ名を入力">
+    <button onclick="createGroup()">グループを作成</button>
+
+    <h2>グループにログイン</h2>
+    <input type="text" id="login-group-name" placeholder="グループ名を入力">
+    <button onclick="loginGroup()">グループにログイン</button>
+
+    <h2>オープンチャット</h2>
+    <button onclick="enterOpenChat()">オープンチャットに入る</button>
+</div>
+
+<!-- チャット画面 -->
+<div id="chat-container" class="hidden">
+    <h2>グループチャット</h2>
+    <input type="text" id="name" placeholder="名前を入力してください">
+    <input type="text" id="message" placeholder="メッセージを入力してください">
+    <button onclick="sendMessage()">送信</button>
+    <div id="chat-box"></div>
+</div>
+
+<!-- フォントサイズ変更バー -->
+<div class="font-size-control">
+    <label for="font-size">フォントサイズ:</label>
+    <input type="range" id="font-size" min="8" max="20" value="12" onchange="changeFontSize()">
+</div>
+
+<!-- 画像表示用コンテナ -->
+<div id="image-container">
+    <img id="image" src="your-image-url.jpg" alt="表示する画像">
+</div>
+
+<script>
+    let currentGroup = '';
+    let isQuizPassed = false;
+
+    function checkAnswer() {
+        const answer = document.getElementById('quiz-answer').value;
+        const correctAnswers = ["道枝", "みちえ", "mitie"];
+        const result = document.getElementById('quiz-result');
+
+        if (correctAnswers.includes(answer.trim())) {
+            result.textContent = "正解です！チャットに進めます。";
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('group-ui').classList.remove('hidden'); // グループUIを表示
+        } else {
+            result.textContent = "不正解です。もう一度お試しください。";
+        }
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-theme');
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Tab') {
+            event.preventDefault(); // デフォルトのTab動作をキャンセル
+            toggleImage(); // 画像の表示/非表示を切り替え
+        }
+    });
+
+    function toggleImage() {
+        const imageContainer = document.getElementById('image-container');
+        imageContainer.style.display = imageContainer.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    function createGroup() {
+        const groupName = document.getElementById('group-name').value;
+        if (groupName === "") {
+            alert("グループ名を入力してください");
+            return;
+        }
+        currentGroup = groupName;
+        alert(`グループ '${groupName}' が作成されました`);
+        document.getElementById('group-ui').classList.add('hidden');
+        document.getElementById('chat-container').classList.remove('hidden');
+        document.getElementById('current-group-name').textContent = `グループ名: ${groupName}`;
+        document.getElementById('group-display').classList.remove('hidden');
+    }
+
+    function loginGroup() {
+        const groupName = document.getElementById('login-group-name').value;
+        if (groupName === "") {
+            alert("グループ名を入力してください");
+            return;
+        }
+        currentGroup = groupName;
+        alert(`グループ '${groupName}' にログインしました`);
+        document.getElementById('group-ui').classList.add('hidden');
+        document.getElementById('chat-container').classList.remove('hidden');
+        document.getElementById('current-group-name').textContent = `グループ名: ${groupName}`;
+        document.getElementById('group-display').classList.remove('hidden');
+    }
+
+    function enterOpenChat() {
+        currentGroup = 'openchat';
+        document.getElementById('group-ui').classList.add('hidden');
+        document.getElementById('chat-container').classList.remove('hidden');
+        document.getElementById('current-group-name').textContent = "オープンチャット";
+        document.getElementById('group-display').classList.remove('hidden');
+    }
+
+    function sendMessage() {
+        const message = document.getElementById('message').value;
+        const name = document.getElementById('name').value;
+        if (message === "" || name === "") {
+            alert("名前とメッセージを入力してください");
+            return;
+        }
+
+        // 新しいメッセージを即座に画面に追加
+        const chatBox = document.getElementById('chat-box');
+        const newMessage = `<div class="chat-message">${name}: ${message}</div>`;
+        chatBox.innerHTML = newMessage + chatBox.innerHTML; // 逆順で上に追加
+
+        // サーバーに送信
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "save_message.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                loadMessages(); // メッセージを再読み込み
+            }
+        };
+        xhr.send(`groupName=${encodeURIComponent(currentGroup)}&name=${encodeURIComponent(name)}&message=${encodeURIComponent(message)}`);
+
+        // 入力欄をクリア
+        document.getElementById('message').value = '';
+    }
+
+    function loadMessages() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `get_messages.php?groupName=${currentGroup}`, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const chatBox = document.getElementById('chat-box');
+                chatBox.innerHTML = xhr.responseText + chatBox.innerHTML;
+            }
+        };
+        xhr.send();
+    }
+
+    // 定期的にメッセージを更新
+    setInterval(loadMessages, 200);
+
+    function changeFontSize() {
+        const fontSize = document.getElementById('font-size').value + 'px';
+        document.body.style.fontSize = fontSize;
+    }
+</script>
+
+</body>
+</html>
+
