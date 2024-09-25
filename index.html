@@ -6,111 +6,110 @@
     <title>ミライシード</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-:root {
-    --bg-color: #121212;
-    --container-bg: #1e1e1e;
-    --text-color: #111; /* 黒に近いグレー */
-    --accent-color: #000; /* 見えにくい青 */
-    --message-bg: #222; /* さらに暗い背景 */
-}
+        :root {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #111; /* 黒に近いグレー */
+            --accent-color: #000; /* 見えにくい青 */
+            --message-bg: #222; /* さらに暗い背景 */
+        }
 
-body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--text-color);
-    font-size: 6px; /* 極端に小さいフォントサイズ */
-    letter-spacing: -1px; /* 文字間隔を詰める */
-    line-height: 0.5em; /* 行間を狭く */
-    filter: blur(1px); /* 軽くぼかす */
-}
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            font-size: 6px; /* 極端に小さいフォントサイズ */
+            letter-spacing: -1px; /* 文字間隔を詰める */
+            line-height: 0.5em; /* 行間を狭く */
+            filter: blur(1px); /* 軽くぼかす */
+        }
 
-h1, h2, h3, p {
-    font-size: 8px; /* ヘッダも小さく */
-    color: var(--accent-color);
-}
+        h1, h2, h3, p {
+            font-size: 8px; /* ヘッダも小さく */
+            color: var(--accent-color);
+        }
 
-.container {
-    background-color: var(--container-bg);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7); /* 薄い影を追加 */
-    max-width: 400px;
-    width: 100%;
-    margin: 20px auto;
-    text-align: center;
-    border: 1px solid var(--accent-color); /* 見えにくい枠線 */
-}
+        .container {
+            background-color: var(--container-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7); /* 薄い影を追加 */
+            max-width: 400px;
+            width: 100%;
+            margin: 20px auto;
+            text-align: center;
+            border: 1px solid var(--accent-color); /* 見えにくい枠線 */
+        }
 
-input, button {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid var(--accent-color); /* 見えにくいボーダー */
-    border-radius: 5px;
-    background-color: var(--container-bg);
-    color: var(--accent-color); /* 色を黒に近い色に */
-    font-size: 6px; /* ボタンと入力欄も小さく */
-}
+        input, button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid var(--accent-color); /* 見えにくいボーダー */
+            border-radius: 5px;
+            background-color: var(--container-bg);
+            color: var(--accent-color); /* 色を黒に近い色に */
+            font-size: 6px; /* ボタンと入力欄も小さく */
+        }
 
-button {
-    cursor: pointer;
-}
+        button {
+            cursor: pointer;
+        }
 
-button:hover {
-    background-color: var(--container-bg); /* ホバー時に色を変えない */
-    color: var(--text-color);
-}
+        button:hover {
+            background-color: var(--container-bg); /* ホバー時に色を変えない */
+            color: var(--text-color);
+        }
 
-#chat-box {
-    background-color: var(--message-bg);
-    padding: 10px;
-    border-radius: 5px;
-    height: 200px;
-    overflow-y: scroll;
-    border: 1px solid var(--accent-color); /* 見えにくい枠線 */
-}
+        #chat-box {
+            background-color: var(--message-bg);
+            padding: 10px;
+            border-radius: 5px;
+            height: 200px;
+            overflow-y: scroll;
+            border: 1px solid var(--accent-color); /* 見えにくい枠線 */
+        }
 
-.chat-message {
-    padding: 5px;
-    border-bottom: 1px solid var(--accent-color); /* 見えにくい境界線 */
-    color: var(--text-color);
-    word-wrap: break-word;
-    font-size: 6px; /* メッセージも小さく */
-}
+        .chat-message {
+            padding: 5px;
+            border-bottom: 1px solid var(--accent-color); /* 見えにくい境界線 */
+            color: var(--text-color);
+            word-wrap: break-word;
+            font-size: 6px; /* メッセージも小さく */
+        }
 
-.hidden {
-    display: none;
-}
+        .hidden {
+            display: none;
+        }
 
-#image-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* 背景色を少し濃く */
-    justify-content: center;
-    align-items: center;
-    display: none;
-    z-index: 10;
-}
+        #image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* 背景色を少し濃く */
+            justify-content: center;
+            align-items: center;
+            display: none; /* 初期状態で非表示 */
+            z-index: 10;
+        }
 
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: blur(1px); /* 軽くぼかす */
-}
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(1px); /* 軽くぼかす */
+        }
 
-.font-size-control {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    font-size: 6px; /* フォントサイズを小さく */
-}
-
+        .font-size-control {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 6px; /* フォントサイズを小さく */
+        }
     </style>
 </head>
 <body>
@@ -223,9 +222,10 @@ img {
         currentGroup = groupName;
         alert(`グループ '${groupName}' にログインしました`);
         document.getElementById('group-ui').classList.add('hidden');
-        document.getElementById('chat-container').classList.remove('hidden');
+        document        .getElementById('chat-container').classList.remove('hidden');
         document.getElementById('current-group-name').textContent = `グループ名: ${groupName}`;
         document.getElementById('group-display').classList.remove('hidden');
+        loadMessages(); // グループにログインしたらメッセージをロード
     }
 
     function enterOpenChat() {
@@ -234,6 +234,7 @@ img {
         document.getElementById('chat-container').classList.remove('hidden');
         document.getElementById('current-group-name').textContent = "オープンチャット";
         document.getElementById('group-display').classList.remove('hidden');
+        loadMessages(); // オープンチャットに入ったらメッセージをロード
     }
 
     function sendMessage() {
@@ -244,7 +245,7 @@ img {
             return;
         }
 
-        // 新しいメッセージを即座に画面に追加
+        // 新しいメッセージを即座に画面に追加（逆順のため上に追加）
         const chatBox = document.getElementById('chat-box');
         const newMessage = `<div class="chat-message">${name}: ${message}</div>`;
         chatBox.innerHTML = newMessage + chatBox.innerHTML; // 逆順で上に追加
@@ -277,14 +278,18 @@ img {
     }
 
     // 定期的にメッセージを更新
-    setInterval(loadMessages, 200);
+    setInterval(loadMessages, 500);
 
     function changeFontSize() {
         const fontSize = document.getElementById('font-size').value + 'px';
         document.body.style.fontSize = fontSize;
     }
+
+    // ページが読み込まれたときに最初にメッセージを読み込む
+    window.onload = function() {
+        loadMessages();
+    };
 </script>
 
 </body>
 </html>
-
