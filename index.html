@@ -6,69 +6,109 @@
     <title>ミライシード</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        :root {
-            --bg-color: #121212;
-            --container-bg: #1e1e1e;
-            --text-color: #fff;
-            --accent-color: #00ffe7;
-            --message-bg: #2c2c2c;
-        }
-
-        .light-theme {
-            --bg-color: #f0f0f0;
-            --container-bg: #ffffff;
-            --text-color: #000;
-            --accent-color: #007bff;
-            --message-bg: #eaeaea;
-        }
-
-body {
-    background-color: #000; /* 背景色を黒に */
-    color: #000; /* テキストの色も黒にして見にくく */
-    font-size: 6px; /* フォントサイズを極端に小さく */
-    letter-spacing: -1px; /* 文字間隔を詰める */
-    line-height: 0.5em; /* 行間を狭く */
-    filter: blur(2px); /* 全体をぼかす */
+:root {
+    --bg-color: #121212;
+    --container-bg: #1e1e1e;
+    --text-color: #111; /* 黒に近いグレー */
+    --accent-color: #000; /* 見えにくい青 */
+    --message-bg: #222; /* さらに暗い背景 */
 }
 
-input, button, a {
-    background-color: #000; /* 背景色を黒にしてリンクやボタンを見にくく */
-    color: #000; /* テキストも黒に */
-    border: 1px solid #000; /* 枠線も黒に */
-    font-size: 6px; /* フォントサイズを小さく */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    font-size: 6px; /* 極端に小さいフォントサイズ */
+    letter-spacing: -1px; /* 文字間隔を詰める */
+    line-height: 0.5em; /* 行間を狭く */
+    filter: blur(1px); /* 軽くぼかす */
 }
 
 h1, h2, h3, p {
-    letter-spacing: -2px;
-    line-height: 0.4em;
     font-size: 8px; /* ヘッダも小さく */
+    color: var(--accent-color);
 }
 
-button:hover, a:hover {
-    background-color: #111; /* マウスオーバー時に少しだけ変化 */
-    color: #111; /* さらに見にくく */
+.container {
+    background-color: var(--container-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7); /* 薄い影を追加 */
+    max-width: 400px;
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+    border: 1px solid var(--accent-color); /* 見えにくい枠線 */
+}
+
+input, button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--accent-color); /* 見えにくいボーダー */
+    border-radius: 5px;
+    background-color: var(--container-bg);
+    color: var(--accent-color); /* 色を黒に近い色に */
+    font-size: 6px; /* ボタンと入力欄も小さく */
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--container-bg); /* ホバー時に色を変えない */
+    color: var(--text-color);
+}
+
+#chat-box {
+    background-color: var(--message-bg);
+    padding: 10px;
+    border-radius: 5px;
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid var(--accent-color); /* 見えにくい枠線 */
+}
+
+.chat-message {
+    padding: 5px;
+    border-bottom: 1px solid var(--accent-color); /* 見えにくい境界線 */
+    color: var(--text-color);
+    word-wrap: break-word;
+    font-size: 6px; /* メッセージも小さく */
 }
 
 .hidden {
-    display: none; /* 特定のUIを完全に隠す */
+    display: none;
 }
 
 #image-container {
-    filter: blur(4px); /* 画像もさらにぼかす */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* 背景色を少し濃く */
+    justify-content: center;
+    align-items: center;
+    display: none;
+    z-index: 10;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(1px); /* 軽くぼかす */
 }
 
 .font-size-control {
     position: absolute;
     bottom: 10px;
     left: 10px;
-    font-size: 6px;
-}
-
-#chat-box {
-    background-color: #000;
-    border: 1px solid #000;
-    color: #000;
-    filter: blur(2px);
+    font-size: 6px; /* フォントサイズを小さく */
 }
 
     </style>
